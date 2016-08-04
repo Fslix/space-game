@@ -17,6 +17,9 @@ var barrelRoll;
 var action = {};
 var leftWingRot;
 var rightWingRot;
+var botShootAccuracy = 10;
+var geometry = new THREE.SphereGeometry(1.5 * botShootAccuracy, 32, 32);
+var aimSphere = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
 
 
 function Player() {

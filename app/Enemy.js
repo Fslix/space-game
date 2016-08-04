@@ -3,7 +3,6 @@ var maxAsteroidSize     = 50;
 var minDistanceToPlayer = 200;
 var maxShipSize         = 27;
 var maxShipAngle        = 70 * (Math.PI / 360);
-var shootAccuracy       = 10;
 var shootDistance		= 300;
 var maxShootDistance    = 400;
 var destroyedEnemies 	= 0;
@@ -438,11 +437,6 @@ Enemy.prototype.shoot = function(aimPos, delta) {
 
 	var coolDownTime;
     var aimPosition = aimPos.clone();
-    var geometry = new THREE.SphereGeometry(1.5 * shootAccuracy, 32, 32);
-    var material = new THREE.MeshBasicMaterial({color: 0xffffff});
-
-    var aimSphere = new THREE.Mesh(geometry, material);
-    aimSphere.position.set(aimPosition.x,aimPosition.y,aimPosition.z);
 
     var raycaster = new THREE.Raycaster(this.position,this.direction,0,maxShootDistance);
     var intersects = raycaster.intersectObjects([aimSphere]);
@@ -458,8 +452,8 @@ Enemy.prototype.shoot = function(aimPos, delta) {
             // schiesse
 
             enemyShootLaser(this.position,
-                aimPosition.add(new THREE.Vector3(shootAccuracy * Math.random(),
-                    shootAccuracy * Math.random(),shootAccuracy * Math.random())));
+                aimPosition.add(new THREE.Vector3(botShootAccuracy * Math.random(),
+                    botShootAccuracy * Math.random(),botShootAccuracy * Math.random())));
 
             // Falls Level >= 5 predicten
             if(aimPos==ship.position && this.level >= 5) {
@@ -874,7 +868,7 @@ Enemy.prototype.handleNoDirection = function(delta) {
     var shootDir = MATH.clone(this.direction);
     shootDir.normalize();
     aim.add(shootDir.multiplyScalar(minObstacleDistance));
-    this.shoot(aim);
+    //this.shoot(aim);
     return new THREE.Vector3(0,0,0);
 }
 
